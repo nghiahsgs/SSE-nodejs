@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <th>
+            <td>Công ty</td>
+            <td>Số subs</td>
+        </th>
+
+        <tr id="mngame1">
+            <td>mngame1</td>
+            <td class="sub">0</td>
+        </tr>
+
+        <tr id="mngame2">
+            <td>mngame2</td>
+            <td class="sub">0</td>
+        </tr>
+
+        <tr id="mngame3">
+            <td>mngame3</td>
+            <td class="sub">0</td>
+        </tr>
+
+
+    </table>
+</body>
+</html>
+
+<script>
+
+    var eventSource = new EventSource("http://localhost:3000/sse")
+    eventSource.addEventListener("message", function(e){
+      try{
+        var companies = JSON.parse(e.data)
+        for(let companie_id in companies){
+            document.querySelector(`#${companie_id} .sub`).innerText = companies[companie_id]['subscribers']
+        }
+      }catch{
+
+      }
+    })
+
+</script>
